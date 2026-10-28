@@ -1,5 +1,5 @@
 // 앱 화면 파일만 캐시합니다. 자산 데이터는 기기의 브라우저 저장소에만 있고 여기서 다루지 않습니다.
-const CACHE = 'asset-app-v1';
+const CACHE = 'asset-app-v2';
 const SHELL = ['./', 'index.html', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png', 'icon-maskable-512.png'];
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL)).then(() => self.skipWaiting()));

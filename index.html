@@ -103,6 +103,15 @@ footer{max-width:960px;margin:0 auto;padding:8px 16px 32px;font-size:12px;color:
   .hide-m{display:none}
 }
 [hidden]{display:none!important}
+.news{padding:12px 0;border-bottom:1px solid var(--line)}
+.news:last-child{border-bottom:0}
+.news .t{font-weight:600;font-size:14px}
+.news .t a{color:var(--ink);text-decoration:none}
+.news .t a:hover{text-decoration:underline}
+.news .m{font-size:12px;color:var(--quiet);margin:2px 0 4px;display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.news .s{font-size:13px}
+.hold-h{font-weight:700;font-size:13px;margin:14px 0 2px;color:var(--accent)}
+.hold-h:first-child{margin-top:0}
 </style>
 </head>
 <body>
@@ -125,8 +134,9 @@ footer{max-width:960px;margin:0 auto;padding:8px 16px 32px;font-size:12px;color:
 </header>
 <nav><div class="tabs" role="tablist">
   <button role="tab" aria-selected="true" data-t="dash">대시보드</button>
-  <button role="tab" aria-selected="false" data-t="check">자동 점검</button>
-  <button role="tab" aria-selected="false" data-t="scen">하락 시나리오</button>
+  <button role="tab" aria-selected="false" data-t="news">뉴스</button>
+  <button role="tab" aria-selected="false" data-t="check"><span class="hide-m">자동 </span>점검</button>
+  <button role="tab" aria-selected="false" data-t="scen"><span class="hide-m">하락 </span>시나리오</button>
   <button role="tab" aria-selected="false" data-t="guide">가이드북</button>
 </div></nav>
 <main>
@@ -139,6 +149,13 @@ footer{max-width:960px;margin:0 auto;padding:8px 16px 32px;font-size:12px;color:
   </div>
   <div class="card"><h2>계좌별 투자 현황</h2><p class="lead">계좌 안의 현금 포함 평가금과 수익.</p><div class="tw"><table id="acctTbl"></table></div></div>
   <div class="card"><h2>보유 종목</h2><p class="lead">평가금 큰 순서. 현금은 제외했습니다.</p><div class="tw"><table id="holdTbl"></table></div></div>
+</section>
+
+<section role="tabpanel" id="news">
+  <div class="card"><h2>이번 주 시장</h2><p class="lead" id="newsMeta">뉴스를 불러오는 중입니다.</p><div id="newsMacro"></div></div>
+  <div class="card"><h2>내 보유 종목 소식</h2><p class="lead">자산 데이터의 종목 이름과 맞는 소식만 이 기기에서 골라 보여 줍니다.</p><div id="newsHold"></div></div>
+  <div class="card"><h2>다가오는 일정</h2><div id="newsEvents"></div></div>
+  <p class="note">매주 월요일 아침 자동 갱신. 요약은 원문을 바꿔 쓴 것이며, 사실·의견·해석을 구분해 표시합니다. 매수·매도 권유가 아닙니다.</p>
 </section>
 
 <section role="tabpanel" id="check">
@@ -182,9 +199,9 @@ footer{max-width:960px;margin:0 auto;padding:8px 16px 32px;font-size:12px;color:
 
 <section role="tabpanel" id="guide">
   <div class="card">
-    <h2>지금 수치 (2026년 10월 28일 기준)</h2>
-    <p class="lead">가이드북 문서는 연준·한은 회의 다음 날 자동 갱신됩니다. 이 앱의 수치는 자동으로 바뀌지 않으니 최신 값은 가이드북을 확인하세요.</p>
-    <div class="tw"><table>
+    <h2>지금 수치</h2>
+    <p class="lead" id="indMeta">2026년 10월 28일 기준. 매주 월요일 뉴스 갱신 때 함께 바뀝니다.</p>
+    <div class="tw"><table id="indTbl">
       <tr><th>항목</th><th>미국</th><th>한국</th></tr>
       <tr><td>기준금리</td><td>3.75~4.00%</td><td>3.00%</td></tr>
       <tr><td>소비자물가 (9월, 전년비)</td><td>3.7%</td><td>2.9%</td></tr>
@@ -193,7 +210,7 @@ footer{max-width:960px;margin:0 auto;padding:8px 16px 32px;font-size:12px;color:
       <tr><td>원/달러</td><td colspan="2" style="text-align:right">1,337.7원 (10월 28일 종가)</td></tr>
     </table></div>
     <h3>다음 갱신</h3>
-    <div class="sub">10월 29일 오전 9시 (10월 FOMC 결과) · 11월 26일 오후 2시 (한은 금통위) · 12월 10일 오전 9시 (12월 FOMC)</div>
+    <div class="sub">앱 뉴스·지표: 매주 월요일 오전 7시 · 가이드북 문서: 10월 29일, 11월 26일, 12월 10일</div>
   </div>
   <div class="card">
     <h2>장별 요약</h2>
@@ -429,6 +446,42 @@ function renderScen(id){
 
 document.getElementById('chaps').innerHTML = CHAPS.map(([t,d])=>`<div class="chap"><div class="t">${t}</div><div class="d">${d}</div></div>`).join('');
 
+/* ===== 뉴스 (news.json, 공개 정보) ===== */
+const NEWS_KEY='news.v1'; let NEWS=null;
+const TAGB={'사실':'b-ok','의견':'b-warn','해석':'b-info','컨센서스':'b-need'};
+const safeUrl=u=>/^https?:\/\//.test(u||'')?u:'#';
+function newsItem(n){
+  return `<div class="news"><div class="t"><a href="${esc(safeUrl(n.url))}" target="_blank" rel="noopener">${esc(n.title||'')}</a></div><div class="m">${n.tag?`<span class="badge ${TAGB[n.tag]||'b-need'}">${esc(n.tag)}</span>`:''}<span>${esc(n.date||'')}</span><span>${esc(n.source||'')}</span></div><div class="s">${esc(n.summary||'')}</div></div>`;
+}
+function renderNews(){
+  const N=NEWS;
+  if(!N){ document.getElementById('newsMeta').textContent='아직 받은 뉴스가 없습니다. 인터넷에 연결된 상태로 앱을 열면 받아 옵니다.'; return; }
+  document.getElementById('newsMeta').textContent=`갱신 ${N.updated||'-'}${N.period?' · 대상 기간 '+N.period:''}`;
+  document.getElementById('newsMacro').innerHTML=(N.macro||[]).map(newsItem).join('')||'<div class="sub">이번 주 항목이 없습니다.</div>';
+  let h='';
+  if(M){
+    const names=M.equity.map(x=>x.n);
+    Object.keys(N.holdings||{}).forEach(k=>{
+      const hit=names.find(n=>n.includes(k)); const items=N.holdings[k]||[];
+      if(hit && items.length) h+=`<div class="hold-h">${esc(hit)}</div>`+items.map(newsItem).join('');
+    });
+  }
+  document.getElementById('newsHold').innerHTML=h||'<div class="sub">이번 주 보유 종목 관련 주요 소식이 없습니다.</div>';
+  document.getElementById('newsEvents').innerHTML=(N.events||[]).length?N.events.map(e=>`<div class="news"><div class="t">${esc(e.name)}</div><div class="m"><span>${esc(e.date)}</span></div></div>`).join(''):'<div class="sub">등록된 일정이 없습니다.</div>';
+  if(Array.isArray(N.indicators)&&N.indicators.length){
+    document.getElementById('indTbl').innerHTML='<tr><th>항목</th><th>미국</th><th>한국</th></tr>'+N.indicators.map(r=>`<tr><td>${esc(r.item)}${r.asof?`<div class="sub">${esc(r.asof)}</div>`:''}</td><td>${esc(r.us??'—')}</td><td>${esc(r.kr??'—')}</td></tr>`).join('');
+    document.getElementById('indMeta').textContent=`뉴스 갱신 ${N.updated||'-'} 기준. 매주 월요일 자동 갱신.`;
+  }
+}
+async function loadNews(){
+  try{ NEWS=JSON.parse(store.get(NEWS_KEY)||'null'); }catch(e){ NEWS=null; }
+  renderNews();
+  try{
+    const r=await fetch('news.json',{cache:'no-store'});
+    if(r.ok){ const j=await r.json(); if(j&&typeof j==='object'){ NEWS=j; store.set(NEWS_KEY, JSON.stringify(j)); renderNews(); } }
+  }catch(e){}
+}
+
 /* ===== 시작 ===== */
 function boot(){
   let d=null; try{ d=JSON.parse(store.get(KEY)||'null'); }catch(e){ d=null; }
@@ -440,9 +493,11 @@ function boot(){
   document.getElementById('asof').textContent = `자산 기준 ${d.asof||'날짜 미기재'}${d.fx?' · '+d.fx:''}`;
   document.getElementById('dataInfo').textContent = `불러온 데이터: 자산 기준 ${d.asof||'미기재'} · 이 기기에 저장한 시각 ${d._loadedAt||'-'}`;
   renderDash(); renderChecks(); renderScen(store.get('scen')||'y2022');
+  renderNews();
   const t=store.get('tab'); showTab(t && document.getElementById(t) ? t : 'dash');
 }
 boot();
+loadNews();
 
 if('serviceWorker' in navigator && (location.protocol==='https:'||location.hostname==='localhost')){
   navigator.serviceWorker.register('sw.js').catch(()=>{});
