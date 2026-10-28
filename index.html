@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>내 자산 점검</title>
+<meta name="theme-color" content="#2f6fde">
+<meta name="robots" content="noindex">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<style>
+:root{
+  --bg:#f7f6f3; --card:#ffffff; --ink:#1f1e1c; --quiet:#6b6862; --line:#e4e1da;
+  --accent:#2f6fde; --good:#2e8b57; --warn:#c7841a; --bad:#c2453b;
+  --c1:#2f6fde; --c2:#2aa198; --c3:#d08a2c; --c4:#8a63d2; --c5:#c2453b; --c6:#5b8c3a; --c7:#7a7a7a; --c8:#b5566f;
+  --tab:#ecebe6;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#16161a; --card:#1f1f24; --ink:#ecebe7; --quiet:#a3a09a; --line:#33333a;
+    --accent:#6b9cf0; --good:#5cbf86; --warn:#e2a64a; --bad:#e27366;
+    --c1:#6b9cf0; --c2:#4fc1b6; --c3:#e2a64a; --c4:#a98ae6; --c5:#e27366; --c6:#86b866; --c7:#9a9a9a; --c8:#d97f96;
+    --tab:#26262c;
+  }
+}
+*{box-sizing:border-box}
+html,body{background:var(--bg)}
+body{margin:0;color:var(--ink);font-family:-apple-system,"Segoe UI","Malgun Gothic","Apple SD Gothic Neo",sans-serif;font-size:15px;line-height:1.55;padding-bottom:env(safe-area-inset-bottom)}
+header{padding:calc(16px + env(safe-area-inset-top)) 16px 8px;max-width:960px;margin:0 auto;display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+h1{font-size:21px;margin:0 0 4px}
+.sub{color:var(--quiet);font-size:13px}
+.hbtn{flex:none;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;padding:8px 12px;font:inherit;font-size:13px;font-weight:600;cursor:pointer;min-height:40px}
+nav{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+.tabs{display:flex;gap:6px;max-width:960px;margin:0 auto;padding:8px 16px;overflow-x:auto}
+.tabs button{flex:1 0 auto;border:0;border-radius:10px;padding:10px 14px;font:inherit;font-weight:600;font-size:14px;background:var(--tab);color:var(--quiet);cursor:pointer;min-height:44px}
+.tabs button[aria-selected="true"]{background:var(--accent);color:#fff}
+main{max-width:960px;margin:0 auto;padding:16px}
+section[role=tabpanel]{display:none}
+section[role=tabpanel].on{display:block}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:14px}
+.card h2{font-size:16px;margin:0 0 4px}
+.card h3{font-size:14px;margin:14px 0 6px}
+.lead{color:var(--quiet);font-size:13px;margin:0 0 12px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px}
+.kpi .l{font-size:12px;color:var(--quiet)}
+.kpi .v{font-size:19px;font-weight:700;font-variant-numeric:tabular-nums}
+.kpi .s{font-size:12px;color:var(--quiet)}
+.grid2{display:grid;grid-template-columns:1fr;gap:14px}
+@media(min-width:760px){.grid2{grid-template-columns:1fr 1fr}}
+table{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}
+th,td{padding:7px 6px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+th:first-child,td:first-child{text-align:left;white-space:normal;min-width:120px}
+th{color:var(--quiet);font-weight:600;font-size:12px}
+.tw{overflow-x:auto}
+.pos{color:var(--good)} .neg{color:var(--bad)}
+.legend{display:flex;flex-direction:column;gap:6px;font-size:13px}
+.legend div{display:flex;align-items:center;gap:8px}
+.sw{width:11px;height:11px;border-radius:3px;flex:none}
+.legend .amt{margin-left:auto;font-variant-numeric:tabular-nums;color:var(--quiet)}
+.donutwrap{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.donutwrap svg{flex:none}
+.bars .row{display:grid;grid-template-columns:minmax(90px,150px) 1fr 64px;gap:8px;align-items:center;font-size:13px;margin:6px 0}
+.bars .track{height:12px;background:var(--tab);border-radius:6px;overflow:hidden}
+.bars .fill{height:100%;border-radius:6px}
+.bars .pct{text-align:right;font-variant-numeric:tabular-nums;color:var(--quiet)}
+.check{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.check:last-child{border-bottom:0}
+.badge{flex:none;font-size:11px;font-weight:700;border-radius:999px;padding:3px 9px;height:fit-content;white-space:nowrap}
+.b-ok{background:color-mix(in srgb,var(--good) 16%,transparent);color:var(--good)}
+.b-warn{background:color-mix(in srgb,var(--warn) 18%,transparent);color:var(--warn)}
+.b-info{background:color-mix(in srgb,var(--accent) 14%,transparent);color:var(--accent)}
+.b-need{background:var(--tab);color:var(--quiet)}
+.check .t{font-weight:600}
+.check .d{font-size:13px;color:var(--quiet);margin-top:2px}
+.check .g{font-size:12px;margin-top:4px}
+a{color:var(--accent)}
+label{font-size:13px;color:var(--quiet)}
+input[type=number]{width:100%;font:inherit;padding:8px 10px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink);min-height:40px}
+.inputs{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-top:8px}
+.scen{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;margin-bottom:12px}
+.scen button{text-align:left;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:10px 12px;font:inherit;cursor:pointer;min-height:44px}
+.scen button[aria-pressed="true"]{border-color:var(--accent);box-shadow:0 0 0 2px color-mix(in srgb,var(--accent) 30%,transparent)}
+.scen .n{font-weight:600;font-size:14px}.scen .p{font-size:12px;color:var(--quiet)}
+.note{font-size:12px;color:var(--quiet);margin-top:10px}
+.tag{font-size:11px;color:var(--warn);font-weight:600}
+.big{font-size:26px;font-weight:700;font-variant-numeric:tabular-nums}
+.chap{padding:12px 0;border-bottom:1px solid var(--line)}
+.chap:last-child{border-bottom:0}
+.chap .t{font-weight:600}
+.chap .d{font-size:13px;color:var(--quiet)}
+.btn{display:inline-flex;align-items:center;justify-content:center;border:0;border-radius:10px;padding:12px 18px;font:inherit;font-weight:700;background:var(--accent);color:#fff;cursor:pointer;min-height:48px}
+.btn.ghost{background:var(--tab);color:var(--ink)}
+.btn.danger{background:color-mix(in srgb,var(--bad) 14%,transparent);color:var(--bad)}
+.btnrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.err{color:var(--bad);font-size:13px;margin-top:8px}
+.empty{max-width:560px;margin:24px auto;padding:env(safe-area-inset-top) 16px 0}
+footer{max-width:960px;margin:0 auto;padding:8px 16px 32px;font-size:12px;color:var(--quiet)}
+@media(max-width:520px){
+  .tabs{gap:4px;padding:8px 10px}
+  .tabs button{flex:1 1 0;padding:10px 4px;font-size:13px;white-space:nowrap}
+  .hide-m{display:none}
+}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<input type="file" id="fileIn" accept=".json,application/json" hidden>
+
+<div id="emptyView" class="empty" hidden>
+  <div class="card">
+    <h1>내 자산 점검</h1>
+    <p class="lead">이 기기에 아직 자산 데이터가 없습니다. 자산데이터.json 파일을 불러오면 이 기기 안에만 저장되고, 인터넷으로 보내지지 않습니다.</p>
+    <button class="btn" data-act="load">자산 데이터 불러오기</button>
+    <div class="err" id="errEmpty"></div>
+    <p class="note">파일은 노트북의 문서 → 자산점검앱 폴더에 있습니다. 휴대폰에서는 OneDrive 등에 올린 파일을 고르면 됩니다.</p>
+  </div>
+</div>
+
+<div id="appView" hidden>
+<header>
+  <div><h1>내 자산 점검</h1><div class="sub" id="asof"></div></div>
+  <button class="hbtn" data-act="tab-data">데이터</button>
+</header>
+<nav><div class="tabs" role="tablist">
+  <button role="tab" aria-selected="true" data-t="dash">대시보드</button>
+  <button role="tab" aria-selected="false" data-t="check">자동 점검</button>
+  <button role="tab" aria-selected="false" data-t="scen">하락 시나리오</button>
+  <button role="tab" aria-selected="false" data-t="guide">가이드북</button>
+</div></nav>
+<main>
+
+<section role="tabpanel" id="dash" class="on">
+  <div class="kpis" id="kpis"></div>
+  <div class="grid2" style="margin-top:14px">
+    <div class="card"><h2>자산군 구성</h2><p class="lead">저축은 만기까지 묶인 장기 저축입니다.</p><div class="donutwrap" id="donut1"></div></div>
+    <div class="card"><h2>주식 노출 구성</h2><p class="lead">주식·ETF·펀드 평가금 기준. 분류는 <span class="tag">[추정]</span>입니다.</p><div class="bars" id="expo"></div></div>
+  </div>
+  <div class="card"><h2>계좌별 투자 현황</h2><p class="lead">계좌 안의 현금 포함 평가금과 수익.</p><div class="tw"><table id="acctTbl"></table></div></div>
+  <div class="card"><h2>보유 종목</h2><p class="lead">평가금 큰 순서. 현금은 제외했습니다.</p><div class="tw"><table id="holdTbl"></table></div></div>
+</section>
+
+<section role="tabpanel" id="check">
+  <div class="card">
+    <h2>점검 기준 입력</h2>
+    <p class="lead">가이드북 6장 체크리스트를 자동으로 확인합니다. 아래 값은 이 기기에만 저장됩니다.</p>
+    <div class="inputs">
+      <div><label for="tStock">목표 주식 비중(%)</label><input type="number" id="tStock" min="0" max="100" step="1" placeholder="미설정"></div>
+      <div><label for="tCash">목표 현금성 비중(%)</label><input type="number" id="tCash" min="0" max="100" step="1" placeholder="미설정"></div>
+      <div><label for="band">허용 범위(±%p)</label><input type="number" id="band" min="1" max="20" step="1" value="5"></div>
+      <div><label for="mExp">월 생활비(원)</label><input type="number" id="mExp" min="0" step="10000" placeholder="미입력"></div>
+    </div>
+  </div>
+  <div class="card"><h2>구조 점검</h2><div id="chkStruct"></div></div>
+  <div class="card"><h2>비용·세금 점검</h2><div id="chkTax"></div></div>
+  <div class="card"><h2>남은 결정</h2><div id="chkTodo"></div></div>
+</section>
+
+<section role="tabpanel" id="scen">
+  <div class="card">
+    <h2>실제 하락 사례를 내 보유분에 적용</h2>
+    <p class="lead">각 사례의 지수 하락률을 노출 유형별로 대입한 결과입니다. 환율 변화와 개별 종목 차이는 반영하지 않았습니다 <span class="tag">[추정]</span>.</p>
+    <div class="scen" id="scenBtns"></div>
+    <div class="grid2">
+      <div>
+        <div class="lead" style="margin:0">예상 평가 손실</div>
+        <div class="big neg" id="scLoss"></div>
+        <div class="sub" id="scPct"></div>
+      </div>
+      <div class="sub" id="scDesc"></div>
+    </div>
+    <h3>노출 유형별 손실</h3>
+    <div class="bars" id="scBars"></div>
+    <div class="note" id="scNote"></div>
+  </div>
+  <div class="card">
+    <h2>이 계산을 읽는 법</h2>
+    <div class="sub">저축·예금·포인트는 손실 0으로 두었습니다. 2022년에는 원/달러 환율이 올라 원화 기준 미국 자산 손실이 지수 하락률보다 작았습니다. 그래서 미국 노출 손실은 이 표보다 작았을 가능성이 큽니다. 반대로 변동성이 큰 개별주는 지수보다 훨씬 크게 떨어질 수 있습니다. 가이드북 3-3, 3-4 참고.</div>
+  </div>
+</section>
+
+<section role="tabpanel" id="guide">
+  <div class="card">
+    <h2>지금 수치 (2026년 10월 28일 기준)</h2>
+    <p class="lead">가이드북 문서는 연준·한은 회의 다음 날 자동 갱신됩니다. 이 앱의 수치는 자동으로 바뀌지 않으니 최신 값은 가이드북을 확인하세요.</p>
+    <div class="tw"><table>
+      <tr><th>항목</th><th>미국</th><th>한국</th></tr>
+      <tr><td>기준금리</td><td>3.75~4.00%</td><td>3.00%</td></tr>
+      <tr><td>소비자물가 (9월, 전년비)</td><td>3.7%</td><td>2.9%</td></tr>
+      <tr><td>근원물가 (9월)</td><td>2.6%</td><td>2.8%</td></tr>
+      <tr><td>실업률 (9월)</td><td>4.2%</td><td>—</td></tr>
+      <tr><td>원/달러</td><td colspan="2" style="text-align:right">1,337.7원 (10월 28일 종가)</td></tr>
+    </table></div>
+    <h3>다음 갱신</h3>
+    <div class="sub">10월 29일 오전 9시 (10월 FOMC 결과) · 11월 26일 오후 2시 (한은 금통위) · 12월 10일 오전 9시 (12월 FOMC)</div>
+  </div>
+  <div class="card">
+    <h2>장별 요약</h2>
+    <div id="chaps"></div>
+    <p class="note"><a href="https://claude.ai/artifact/NbcBhUqC6zUvGYCy1xngbx" target="_blank" rel="noopener">가이드북 전체 열기</a></p>
+  </div>
+  <div class="card" id="dataCard">
+    <h2>데이터</h2>
+    <p class="lead" id="dataInfo"></p>
+    <div class="btnrow">
+      <button class="btn" data-act="load">새 데이터 불러오기</button>
+      <button class="btn danger" data-act="clear">이 기기에서 지우기</button>
+    </div>
+    <div class="err" id="errApp"></div>
+    <p class="note">자산현황이 바뀌면 새 자산데이터.json을 받아 각 기기에서 다시 불러오세요. 데이터는 이 기기의 브라우저 저장소에만 있고, 이 앱 주소(서버)에는 없습니다.</p>
+  </div>
+</section>
+</main>
+<footer>학습·점검용 개인 도구입니다. 특정 종목의 매수·매도를 권하지 않습니다. <span class="tag">[추정]</span> 표시는 계산·추정값입니다.</footer>
+</div>
+
+<script>
+/* ===== 앱 화면 설정 (개인 자산 정보 없음) ===== */
+const KEY = 'assetData.v1';
+const SCENARIOS = [
+  {id:'y2022', name:'2022년 연준 급속 긴축', period:'2022년 1년간',
+   desc:'연준이 금리를 0~0.25%에서 4.25~4.50%로 올린 해. S&P 500 -19.4%, 나스닥 -33%, 코스피 연말 2,236.40.',
+   drop:{sp:19.4, ndx:33, kospi:24.9},
+   note:'S&P 500 연동 노출은 -19.4%, 나스닥 연동 노출은 -33%, 한국은 코스피 -24.9%(2021년 말 2,977.65 기준 계산, 2021년 말 수치는 원문 미확인)를 적용. 고변동 소형주는 실제로 지수보다 훨씬 크게 떨어졌을 가능성이 큽니다.'},
+  {id:'d0728', name:'2026년 7월 28일 코스피 급락', period:'하루',
+   desc:'코스피 하루 -10.84% (6,023.66 마감). 반도체주 급락.',
+   drop:{kospi:10.84}, note:'한국 노출에만 -10.84%를 적용. 같은 날 미국 자산의 움직임은 반영하지 않았습니다.'},
+  {id:'d0515', name:'2026년 5월 15일 코스피 급락', period:'하루',
+   desc:'코스피 장중 8,000 돌파 후 -6.12% (7,493.18 마감).',
+   drop:{kospi:6.12}, note:'한국 노출에만 -6.12%를 적용.'},
+  {id:'gfc', name:'글로벌 금융위기', period:'2007년 10월~2009년 3월',
+   desc:'S&P 500 고점 대비 약 -57% (1차 출처 미확인).',
+   drop:{sp:57, ndx:57, kospi:57},
+   note:'모든 주식 노출에 -57%를 같은 비율로 적용 [추정]. 당시 원/달러가 크게 올라 원화 기준 미국 자산 손실은 이보다 작았습니다.'}
+];
+const CHAPS = [
+  ['1장. 거시경제 기초','금리·물가·성장·고용·환율 다섯 지표를 읽는 법과 현재 수치.'],
+  ['2장. 통화정책 전달 경로','연준 결정이 기대 → 금리 → 달러·주가 → 원화로 전달되는 단계. 2022년 긴축과 2026년 원화 강세 사례.'],
+  ['3장. 자산배분 원칙과 실증 근거','자산배분이 변동성의 약 90%를 설명(Ibbotson·Kaplan 2000), 액티브 펀드 20년 92.89%가 지수에 뒤짐(SPIVA), 잦은 매매의 비용(Barber·Odean 2000), 실제 하락폭 표.'],
+  ['4장. 기술적 분석','이동평균·RSI·MACD 계산식과 실증 한계. 데이터 스누핑과 과최적화.'],
+  ['5장. 계좌와 세금','국내 주식 차익 비과세, 해외주식 250만 원 공제 후 22%, ISA·연금저축·IRP 비교, 생산적금융 ISA 국회 심의 중.'],
+  ['6장. 자산 점검 체크리스트','이 앱의 자동 점검 탭이 6장 항목을 계산합니다.']
+];
+const COLORS = ['--c1','--c2','--c3','--c4','--c5','--c6','--c7','--c8'];
+
+/* ===== 저장소 ===== */
+const store = {
+  get(k){try{return localStorage.getItem(k)}catch(e){return null}},
+  set(k,v){try{localStorage.setItem(k,v); return true}catch(e){return false}},
+  del(k){try{localStorage.removeItem(k)}catch(e){}}
+};
+const esc = s => String(s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+function validate(d){
+  const errs=[];
+  if(!d || typeof d!=='object') return ['JSON 형식이 아닙니다.'];
+  if(!Array.isArray(d.accounts)) errs.push('accounts 목록이 없습니다.');
+  if(!d.categories || typeof d.categories!=='object') errs.push('categories가 없습니다.');
+  if(!Array.isArray(d.savings)) errs.push('savings 목록이 없습니다.');
+  if(typeof d.deposits!=='number') errs.push('deposits(예금 합계)가 숫자가 아닙니다.');
+  if(errs.length) return errs;
+  d.accounts.forEach((a,i)=>(a.holdings||[]).forEach((h,j)=>{
+    if(typeof h.v!=='number') errs.push(`${a.name||'계좌'+(i+1)}의 ${h.n||j+1}번째 항목 평가금(v)이 숫자가 아닙니다.`);
+    if(h.kind!=='cash' && !d.categories[h.cat]) errs.push(`${h.n}: 분류(cat) '${h.cat}'가 categories에 없습니다.`);
+  }));
+  return errs;
+}
+
+/* ===== 파일 불러오기 ===== */
+const fileIn = document.getElementById('fileIn');
+let errTarget = null;
+document.addEventListener('click', e=>{
+  const act = e.target.closest('[data-act]')?.dataset.act;
+  if(act==='load'){ errTarget = document.getElementById(document.getElementById('appView').hidden?'errEmpty':'errApp'); errTarget.textContent=''; fileIn.value=''; fileIn.click(); }
+  if(act==='clear'){ if(confirm('이 기기에 저장된 자산 데이터와 입력값을 지울까요?')){ ['tStock','tCash','band','mExp','scen','tab'].forEach(k=>store.del(k)); store.del(KEY); boot(); } }
+  if(act==='tab-data'){ showTab('guide'); document.getElementById('dataCard').scrollIntoView({behavior:'smooth'}); }
+});
+fileIn.addEventListener('change', async ()=>{
+  const f = fileIn.files[0]; if(!f) return;
+  try{
+    const d = JSON.parse(await f.text());
+    const errs = validate(d);
+    if(errs.length){ errTarget.innerHTML = '불러오지 못했습니다.<br>' + errs.slice(0,5).map(esc).join('<br>'); return; }
+    d._loadedAt = new Date().toLocaleString('ko-KR');
+    if(!store.set(KEY, JSON.stringify(d))){ errTarget.textContent='이 브라우저에 저장할 수 없습니다(사생활 보호 모드 등).'; return; }
+    boot();
+  }catch(e){ errTarget.textContent = '파일을 읽지 못했습니다: ' + e.message; }
+});
+
+/* ===== 탭 ===== */
+function showTab(id){
+  document.querySelectorAll('[role=tab]').forEach(b=>b.setAttribute('aria-selected', b.dataset.t===id));
+  document.querySelectorAll('[role=tabpanel]').forEach(p=>p.classList.toggle('on', p.id===id));
+  store.set('tab', id); window.scrollTo({top:0});
+}
+document.querySelectorAll('[role=tab]').forEach(b=>b.addEventListener('click',()=>showTab(b.dataset.t)));
+
+/* ===== 공통 함수 ===== */
+const won = x => Math.round(x).toLocaleString('ko-KR') + '원';
+const pct = (x,d=1) => (isFinite(x)?x:0).toFixed(d) + '%';
+const sum = a => a.reduce((s,x)=>s+(x||0),0);
+const signed = x => `<span class="${x>=0?'pos':'neg'}">${x>=0?'+':''}${won(x)}</span>`;
+
+let M = null; // 계산된 모델
+
+function build(d){
+  const CATS = {}; Object.keys(d.categories).forEach((k,i)=>CATS[k]={...d.categories[k], color: COLORS[i%COLORS.length]});
+  const all = d.accounts.flatMap(a=>(a.holdings||[]).map(h=>({...h, acct:a.name, acctType:a.type})));
+  const equity = all.filter(h=>h.kind!=='cash');
+  const equityTotal = sum(equity.map(h=>h.v));
+  const secCash = sum(all.filter(h=>h.kind==='cash').map(h=>h.v));
+  const savingsTotal = sum(d.savings.map(s=>s.amt));
+  const cashTotal = d.deposits + secCash;
+  const points = d.points||0;
+  const total = savingsTotal + equityTotal + cashTotal + points;
+  const catTotals = {}; for(const k in CATS) catTotals[k] = sum(equity.filter(h=>h.cat===k).map(h=>h.v));
+  const usTotal = sum(Object.keys(CATS).filter(k=>CATS[k].us).map(k=>catTotals[k]));
+  const usdCash = sum(all.filter(h=>h.usd).map(h=>h.v));
+  return {d, CATS, all, equity, equityTotal, secCash, savingsTotal, cashTotal, points, total, catTotals, usTotal, usdCash};
+}
+
+/* ===== 대시보드 ===== */
+function renderDash(){
+  const m=M;
+  const kpi=(l,v,s)=>`<div class="kpi"><div class="l">${l}</div><div class="v">${v}</div><div class="s">${s||''}</div></div>`;
+  const profit = sum(m.equity.map(h=>h.p));
+  document.getElementById('kpis').innerHTML =
+    kpi('총자산', won(m.total), '저축·투자·현금성·포인트') +
+    kpi('주식·ETF·펀드', won(m.equityTotal), '총자산의 '+pct(m.equityTotal/m.total*100)) +
+    kpi('평가 손익', signed(profit), '보유 종목 합계') +
+    kpi('미국 노출', pct(m.usTotal/m.equityTotal*100), '주식 평가금 대비, 달러 현금 별도');
+
+  const parts=[{l:'저축(장기 묶임)',v:m.savingsTotal,c:'--c1'},{l:'주식·ETF·펀드',v:m.equityTotal,c:'--c3'},{l:'현금성(예금+증권 현금)',v:m.cashTotal,c:'--c2'},{l:'포인트',v:m.points,c:'--c7'}];
+  const R=62,r=40,C=2*Math.PI; let a=-Math.PI/2, paths='';
+  parts.forEach(p=>{ const f=p.v/m.total; if(f<=0) return; const a2=a+f*C, lg=f>0.5?1:0;
+    const P=(rad,ang)=>`${70+rad*Math.cos(ang)} ${70+rad*Math.sin(ang)}`;
+    paths+=`<path d="M${P(R,a)}A${R} ${R} 0 ${lg} 1 ${P(R,a2)}L${P(r,a2)}A${r} ${r} 0 ${lg} 0 ${P(r,a)}Z" fill="var(${p.c})"/>`; a=a2; });
+  document.getElementById('donut1').innerHTML = `<svg width="140" height="140" viewBox="0 0 140 140" role="img" aria-label="자산군 구성">${paths}</svg><div class="legend" style="flex:1;min-width:220px">${parts.map(p=>`<div><span class="sw" style="background:var(${p.c})"></span>${p.l}<span class="amt">${won(p.v)} · ${pct(p.v/m.total*100)}</span></div>`).join('')}</div>`;
+
+  const rows = Object.keys(m.CATS).map(k=>({l:m.CATS[k].label, v:m.catTotals[k], c:m.CATS[k].color})).filter(r=>r.v>0).sort((a,b)=>b.v-a.v);
+  const mx = Math.max(...rows.map(r=>r.v),1);
+  document.getElementById('expo').innerHTML = rows.map(r=>`<div class="row"><div>${esc(r.l)}</div><div class="track"><div class="fill" style="width:${Math.max(0.5,r.v/mx*100)}%;background:var(${r.c})"></div></div><div class="pct">${pct(r.v/m.equityTotal*100)}</div></div>`).join('');
+
+  let h='<tr><th>계좌</th><th>평가금(현금 포함)</th><th class="hide-m">현금</th><th>평가 손익</th></tr>';
+  m.d.accounts.forEach(a=>{ const hs=a.holdings||[];
+    h+=`<tr><td>${esc(a.name)}</td><td>${won(sum(hs.map(x=>x.v)))}</td><td class="hide-m">${won(sum(hs.filter(x=>x.kind==='cash').map(x=>x.v)))}</td><td>${signed(sum(hs.map(x=>x.p)))}</td></tr>`; });
+  document.getElementById('acctTbl').innerHTML=h;
+
+  let t='<tr><th>종목</th><th class="hide-m">계좌</th><th>평가금</th><th>비중</th><th>수익률</th></tr>';
+  [...m.equity].sort((a,b)=>b.v-a.v).forEach(x=>{ const r=x.r??0;
+    t+=`<tr><td>${esc(x.n)}</td><td class="hide-m">${esc(x.acct.replace('증권',''))}</td><td>${won(x.v)}</td><td>${pct(x.v/m.equityTotal*100)}</td><td class="${r>=0?'pos':'neg'}">${r>=0?'+':''}${pct(r)}</td></tr>`; });
+  document.getElementById('holdTbl').innerHTML=t;
+}
+
+/* ===== 자동 점검 ===== */
+const B = {ok:['b-ok','범위 안'], warn:['b-warn','확인 필요'], info:['b-info','정보'], need:['b-need','입력 필요']};
+const item=(st,t,d,g)=>`<div class="check"><span class="badge ${B[st][0]}">${B[st][1]}</span><div><div class="t">${t}</div><div class="d">${d}</div>${g?`<div class="g">가이드북 ${g}</div>`:''}</div></div>`;
+['tStock','tCash','band','mExp'].forEach(id=>{
+  const el=document.getElementById(id); const v=store.get(id); if(v!==null) el.value=v;
+  el.addEventListener('input',()=>{store.set(id, el.value); if(M) renderChecks();});
+});
+function renderChecks(){
+  const m=M, d=m.d;
+  const band = parseFloat(document.getElementById('band').value)||5;
+  const tS=document.getElementById('tStock').value, tC=document.getElementById('tCash').value;
+  const mExp=parseFloat(document.getElementById('mExp').value);
+  const curS=m.equityTotal/m.total*100, curC=m.cashTotal/m.total*100;
+  let s='';
+  if(tS===''){ s+=item('need','목표 주식 비중',`현재 ${pct(curS)}. 목표를 입력하면 ±${band}%p 이탈 여부를 표시합니다.`,'3-2 리밸런싱'); }
+  else { const x=curS-parseFloat(tS); s+=item(Math.abs(x)>band?'warn':'ok','목표 주식 비중',`현재 ${pct(curS)} / 목표 ${esc(tS)}% → 차이 ${x>=0?'+':''}${x.toFixed(1)}%p (허용 ±${band}%p)`,'3-2 리밸런싱'); }
+  if(tC===''){ s+=item('need','목표 현금성 비중',`현재 ${pct(curC)}.`,'3-2'); }
+  else { const x=curC-parseFloat(tC); s+=item(Math.abs(x)>band?'warn':'ok','목표 현금성 비중',`현재 ${pct(curC)} / 목표 ${esc(tC)}% → 차이 ${x>=0?'+':''}${x.toFixed(1)}%p`,'3-2'); }
+
+  const usP=m.usTotal/m.equityTotal*100;
+  const nonUS = Object.keys(m.CATS).filter(k=>!m.CATS[k].us && m.catTotals[k]>0).map(k=>`${esc(m.CATS[k].label)} ${pct(m.catTotals[k]/m.equityTotal*100)}`).join(', ');
+  s+=item(usP>70?'warn':'info','국가 분산',`주식 노출 중 미국 ${pct(usP)}${nonUS?', '+nonUS:''}.${m.usdCash?` 달러 현금 약 ${won(m.usdCash)} 별도.`:''} 미국 70% 초과 시 '확인 필요'로 표시.`,'3-4 실패 조건');
+
+  const stocks=m.equity.filter(h=>h.kind==='stock').sort((a,b)=>b.v-a.v);
+  if(stocks.length){ const top3=stocks.slice(0,3);
+    s+=item(stocks[0].v/m.equityTotal*100>10?'warn':'ok','개별 종목 집중도',`개별주 상위 ${top3.length}개: ${top3.map(x=>`${esc(x.n)} ${pct(x.v/m.equityTotal*100)}`).join(', ')} → 합계 ${pct(sum(top3.map(x=>x.v))/m.equityTotal*100)} (주식 평가금 대비). 단일 종목 10% 초과 시 '확인 필요'.`,'3-1, 3-3'); }
+
+  Object.keys(m.CATS).filter(k=>m.CATS[k].theme && m.catTotals[k]>0).forEach(k=>{
+    const hs=m.equity.filter(h=>h.cat===k);
+    s+=item('info',`테마 집중 (${esc(m.CATS[k].label)})`,`${hs.map(h=>esc(h.n)).join('·')} 합계 ${won(m.catTotals[k])} = 주식의 ${pct(m.catTotals[k]/m.equityTotal*100)}, 총자산의 ${pct(m.catTotals[k]/m.total*100)}. 현재 수익률 ${hs.map(h=>pct(h.r??0)).join(', ')}.${m.CATS[k].note?' '+esc(m.CATS[k].note)+'.':''}`,'3-3 최대 손실, 4-3'); });
+
+  const dup=(d.duplicates||[]).map(([a,b,ix])=>{ const va=m.equity.find(h=>h.n===a), vb=m.equity.find(h=>h.n===b); return (va&&vb)?`${esc(ix)}: ${esc(a)} ${won(va.v)} + ${esc(b)} ${won(vb.v)}`:null; }).filter(Boolean);
+  if(dup.length) s+=item('info','동일 지수 중복 보유', dup.join(' · ')+'. 같은 지수를 두 계좌에 나눠 담은 상태입니다.','5-4 계좌 배치');
+
+  if(isNaN(mExp)||!mExp){ s+=item('need','비상자금',`현금성 자산 ${won(m.cashTotal)} (예금 ${won(d.deposits)} + 증권계좌 현금 ${won(m.secCash)}). 월 생활비를 입력하면 몇 개월치인지 계산합니다.`,'6-1'); }
+  else { const a1=d.deposits/mExp, a2=m.cashTotal/mExp; s+=item(a1<6?'warn':'ok','비상자금',`예금만 ${a1.toFixed(1)}개월치, 증권계좌 현금 포함 ${a2.toFixed(1)}개월치. 기준 6개월. 증권계좌 현금은 투자 대기 자금일 수 있어 따로 표시했습니다.`,'6-1'); }
+  document.getElementById('chkStruct').innerHTML=s;
+
+  let t='';
+  const foreign=m.equity.filter(h=>h.acctType!=='ISA' && m.CATS[h.cat]?.us);
+  const fG=sum(foreign.filter(h=>h.p>0).map(h=>h.p)), fL=sum(foreign.filter(h=>h.p<0).map(h=>h.p));
+  if(foreign.length) t+=item('info','해외주식 미실현 손익 (일반 계좌)',`이익 종목 합계 +${won(fG)}, 손실 종목 합계 ${won(fL)}, 순 ${won(fG+fL)}. 양도세는 실현 손익 기준이며 연 250만 원 공제 후 22%입니다.`,'5-1');
+  const isDiv=h=>h.dividend||m.CATS[h.cat]?.dividend;
+  const divOut=m.equity.filter(h=>h.acctType!=='ISA'&&isDiv(h)), divIn=m.equity.filter(h=>h.acctType==='ISA'&&isDiv(h));
+  if(divOut.length||divIn.length) t+=item('info','배당 자산의 계좌 위치',`일반 계좌: ${divOut.map(h=>`${esc(h.n.split('(')[0])} ${won(h.v)}`).join(', ')||'없음'}. ISA: ${divIn.map(h=>`${esc(h.n.split('(')[0])} ${won(h.v)}`).join(', ')||'없음'}.`,'5-4 계좌 배치');
+  d.accounts.filter(a=>a.type==='ISA').forEach(a=>{ const hs=a.holdings||[], p=sum(hs.map(x=>x.p));
+    t+=item(p>2000000?'warn':'info','ISA 비과세 한도',`${esc(a.name)} 평가 손익 ${p>=0?'+':''}${won(p)} (일반형 비과세 한도 200만 원 대비 ${pct(p/2000000*100,0)}). 평가금 ${won(sum(hs.map(x=>x.v)))}.`,'5-2'); });
+  t+=item('need','보유 펀드·ETF 총보수','보수 자료가 데이터 파일에 없어 계산하지 못했습니다.','3-1 비용');
+  t+=item('need','ISA 의무 기간 만료일','ISA 가입일이 데이터 파일에 없습니다.','5-2');
+  document.getElementById('chkTax').innerHTML=t;
+
+  const savP=m.savingsTotal/m.total*100;
+  document.getElementById('chkTodo').innerHTML =
+    item(tS===''?'need':'ok','목표 자산배분 정하기', tS===''?`목표 주식·현금 비중을 정해야 이탈 점검이 작동합니다. 저축 ${pct(savP)}는 장기 묶임 자금이라 목표를 정할 때 따로 보는 방법도 있습니다.`:'목표 비중이 입력됐습니다.','3장') +
+    item('info','생산적금융 ISA','국회 통과 여부에 따라 국내 주식 배치를 다시 볼지 결정 필요. 11월 26일 가이드북 갱신 때 상황이 반영됩니다.','5-3');
+}
+
+/* ===== 하락 시나리오 ===== */
+document.getElementById('scenBtns').innerHTML = SCENARIOS.map(s=>`<button data-s="${s.id}" aria-pressed="false"><div class="n">${s.name}</div><div class="p">${s.period}</div></button>`).join('');
+document.querySelectorAll('#scenBtns button').forEach(b=>b.addEventListener('click',()=>renderScen(b.dataset.s)));
+function renderScen(id){
+  const m=M, sc=SCENARIOS.find(x=>x.id===id)||SCENARIOS[0];
+  document.querySelectorAll('#scenBtns button').forEach(b=>b.setAttribute('aria-pressed', b.dataset.s===sc.id));
+  const rows=Object.keys(m.CATS).map(k=>{const dr=sc.drop[m.CATS[k].idx]||0; return {l:m.CATS[k].label, base:m.catTotals[k], d:dr, v:m.catTotals[k]*dr/100, c:m.CATS[k].color};});
+  const loss=sum(rows.map(r=>r.v));
+  document.getElementById('scLoss').textContent='-'+won(loss);
+  document.getElementById('scPct').textContent=`주식 평가금의 ${pct(loss/m.equityTotal*100)} · 총자산의 ${pct(loss/m.total*100)}`;
+  document.getElementById('scDesc').innerHTML=`<b>${sc.name}</b> (${sc.period})<br>${sc.desc}`;
+  const mx=Math.max(...rows.map(r=>r.v),1);
+  document.getElementById('scBars').innerHTML=rows.filter(r=>r.base>0).sort((a,b)=>b.v-a.v).map(r=>`<div class="row"><div>${esc(r.l)}<div class="sub">-${r.d}% 적용</div></div><div class="track"><div class="fill" style="width:${Math.max(0.5,r.v/mx*100)}%;background:var(${r.c})"></div></div><div class="pct">-${Math.round(r.v/10000).toLocaleString('ko-KR')}만</div></div>`).join('');
+  document.getElementById('scNote').textContent=sc.note;
+  store.set('scen', sc.id);
+}
+
+document.getElementById('chaps').innerHTML = CHAPS.map(([t,d])=>`<div class="chap"><div class="t">${t}</div><div class="d">${d}</div></div>`).join('');
+
+/* ===== 시작 ===== */
+function boot(){
+  let d=null; try{ d=JSON.parse(store.get(KEY)||'null'); }catch(e){ d=null; }
+  if(d && validate(d).length) d=null;
+  document.getElementById('emptyView').hidden = !!d;
+  document.getElementById('appView').hidden = !d;
+  if(!d){ M=null; return; }
+  M = build(d);
+  document.getElementById('asof').textContent = `자산 기준 ${d.asof||'날짜 미기재'}${d.fx?' · '+d.fx:''}`;
+  document.getElementById('dataInfo').textContent = `불러온 데이터: 자산 기준 ${d.asof||'미기재'} · 이 기기에 저장한 시각 ${d._loadedAt||'-'}`;
+  renderDash(); renderChecks(); renderScen(store.get('scen')||'y2022');
+  const t=store.get('tab'); showTab(t && document.getElementById(t) ? t : 'dash');
+}
+boot();
+
+if('serviceWorker' in navigator && (location.protocol==='https:'||location.hostname==='localhost')){
+  navigator.serviceWorker.register('sw.js').catch(()=>{});
+}
+</script>
+</body>
+</html>

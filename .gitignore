@@ -1,0 +1,4 @@
+# 개인 자산 데이터는 저장소에 올리지 않습니다
+*.json
+!manifest.json
+자산*.html
