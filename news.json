@@ -1,30 +1,51 @@
 {
   "schema": 1,
-  "updated": "2026-10-29 01:40 KST (초기본)",
-  "period": "2026-10-19 ~ 2026-10-28",
+  "updated": "2026-10-29 10:10 KST",
+  "period": "2026-10-22 ~ 2026-10-29",
   "indicators": [
-    {"item": "기준금리", "us": "3.75~4.00%", "kr": "3.00%", "asof": "미국 9월 16일 인상 · 한국 10월 22일 동결"},
-    {"item": "소비자물가 (전년비)", "us": "3.7%", "kr": "2.9%", "asof": "2026년 9월"},
-    {"item": "근원물가", "us": "2.6%", "kr": "2.8%", "asof": "2026년 9월"},
-    {"item": "실업률", "us": "4.2%", "kr": "—", "asof": "2026년 9월"},
-    {"item": "원/달러", "us": "—", "kr": "1,337.7원", "asof": "10월 28일 종가"}
+    {"item": "기준금리", "us": "3.75~4.00%", "kr": "3.00%", "asof": "미국 10월 28일 동결(연준 성명) · 한국 10월 22일 동결(한은)"},
+    {"item": "소비자물가 (전년비)", "us": "3.7%", "kr": "2.9%", "asof": "2026년 9월 (BLS · 국가데이터처)"},
+    {"item": "근원물가", "us": "2.6%", "kr": "2.8%", "asof": "2026년 9월 (BLS · 한은 결정문 인용)"},
+    {"item": "실업률", "us": "4.2%", "kr": "—", "asof": "2026년 9월 (BLS)"},
+    {"item": "원/달러", "us": "—", "kr": "1,337.7원", "asof": "10월 28일 서울 종가 (이투데이)"},
+    {"item": "미 10년물 국채금리", "us": "5.04%", "kr": "—", "asof": "10월 28일 뉴욕 종가 (Capp Notes)"},
+    {"item": "주간 등락 (코스피·S&P 500)", "us": "S&P 500 +1.6%", "kr": "코스피 +8.3%", "asof": "10월 23일 종가 대비 10월 28일 종가 (S&P 7,623.68→7,743.98, 코스피 5,550.30→6,012.44)"}
   ],
   "macro": [
-    {"title": "한국은행, 기준금리 연 3.00% 만장일치 동결", "date": "2026-10-22", "source": "아이뉴스24 (한은 결정문 전문)", "url": "https://inews24.com/view/2017755", "tag": "사실",
-     "summary": "7·8월 연속 인상 뒤 첫 동결. 결정문은 9월 소비자물가 2.9%, 근원물가 2.8%를 언급하며 추가 인상의 시기와 속도를 점검하겠다고 밝혔습니다."},
-    {"title": "미국 9월 소비자물가 3.7%, 휘발유가 상승분의 절반 이상", "date": "2026-10-14", "source": "BLS 수치 요약", "url": "https://www.simianx.ai/stories/us-cpi-report-latest-inflation-data-and-release-schedule", "tag": "사실",
-     "summary": "헤드라인 3.7%로 8월 3.4%에서 올랐고, 근원은 2.6%입니다. 휘발유가 한 달에 9.1% 올라 전체 상승의 절반 이상을 차지했습니다."},
-    {"title": "미국 9월 비농업 고용 2만 9천 명 증가, 실업률 4.2%", "date": "2026-10-02", "source": "Nova Scotia 통계청 (BLS 인용)", "url": "https://novascotia.ca/finance/statistics/news.asp?id=22394", "tag": "사실",
-     "summary": "시장 예상(8만 명대)을 크게 밑돌았고 실업률은 4.1%에서 올랐습니다. 10월 금리 인상 가능성을 낮춘 자료로 해석됐습니다."},
-    {"title": "10월 FOMC는 동결 예상, 12월 인상 여부가 관심", "date": "2026-10-28", "source": "Quartz (CNBC·Bloomberg 인용)", "url": "https://qz.com/fed-hold-rates-october-december-hike-expected-102826", "tag": "컨센서스",
-     "summary": "결정 직전 선물시장은 10월 동결을 약 90% 반영했고, 12월 0.25%p 인상을 유력하게 봤습니다. 결과는 다음 갱신 때 반영합니다."}
+    {"title": "FOMC, 기준금리 3.75~4.00% 동결…쿡·해맥 2명 인상 주장하며 반대", "date": "2026-10-28", "source": "연방준비제도 (FOMC 성명)", "url": "https://www.federalreserve.gov/monetarypolicy/files/monetary20261028a1.pdf", "tag": "사실",
+     "summary": "표결은 10대 2로, 리사 쿡 이사와 베스 해맥 클리블랜드 연은 총재가 0.25%p 인상을 원했습니다. 성명은 물가가 여전히 높다고 평가하고 다음 결정은 추가 자료를 보고 정하겠다며 금리 경로를 따로 제시하지 않았습니다."},
+    {"title": "워시 의장 \"정치는 결정에 영향 없어\"…긴축 효과는 아직 판단 일러", "date": "2026-10-28", "source": "Yahoo Finance (기자회견 라이브)", "url": "https://finance.yahoo.com/economy/policy/live/fed-meeting-live-updates-interest-rates-held-steady-in-split-vote-warsh-says-politics-played-no-role-ahead-of-midterm-elections-191946928.html", "tag": "사실",
+     "summary": "워시 의장은 중간선거를 앞둔 동결에 정치적 고려가 없었다고 밝히고, 그간의 인상이 효과를 내기 시작했지만 결론을 내리기는 이르다고 했습니다. 2027년부터 연 1회는 금리 표결 없이 전략만 논의하는 회의로 바꾼다는 계획도 내놨습니다."},
+    {"title": "12월 FOMC 0.25%p 인상 확률 약 85% 반영", "date": "2026-10-28", "source": "Yahoo Finance (Bloomberg·CME FedWatch 인용)", "url": "https://finance.yahoo.com/economy/policy/live/fed-meeting-live-updates-interest-rates-held-steady-in-split-vote-warsh-says-politics-played-no-role-ahead-of-midterm-elections-191946928.html", "tag": "컨센서스",
+     "summary": "동결 뒤에도 선물시장은 12월 9일 회의에서 추가 인상을 유력하게 보고 있습니다. 그 전 10월 고용(11월 6일)과 10월 CPI(11월 10일)가 변수입니다."},
+    {"title": "뉴욕증시 소폭 상승, 미 10년물 금리는 5% 위로", "date": "2026-10-28", "source": "Capp Notes (장 마감 정리)", "url": "https://cappnotes.substack.com/p/closing-look-wednesday-october-28", "tag": "사실",
+     "summary": "S&P 500은 0.28% 오른 7,743.98로 3일 연속 상승했고, 10년물 금리는 5.2bp 올라 5.04%로 마감했습니다. 같은 날 WTI는 배럴당 102.78달러로 다시 100달러를 넘었고 캐나다 중앙은행은 2023년 이후 처음으로 금리를 올렸습니다."},
+    {"title": "코스피 6.63% 급등해 6,000선 회복…SK하이닉스 사상 최대 실적", "date": "2026-10-28", "source": "블록미디어", "url": "https://www.blockmedia.co.kr/archives/1157590", "tag": "사실",
+     "summary": "SK하이닉스가 3분기 영업이익 83.3조 원의 최대 실적과 주주환원 계획을 내놓자 반도체주가 급등해 코스피가 6,012.44로 마감했습니다. 이틀 연속 매수 사이드카가 발동됐고 외국인·기관이 순매수했습니다."},
+    {"title": "원/달러 14원 오른 1,337.7원 마감, FOMC 전 달러 매수", "date": "2026-10-28", "source": "이투데이", "url": "https://www.etoday.co.kr/news/view/2641260", "tag": "사실",
+     "summary": "FOMC를 앞둔 글로벌 달러 강세와 외국인의 선물환 달러 매수로 환율이 15일 이후 최고치로 올랐습니다. 26일에는 FOMC 경계감과 외국인 순매도로 코스피가 1.46% 내린 5,469.47로 마감한 바 있습니다."},
+    {"title": "FOMC가 비둘기로 해석돼 환율 1,330원대 숨고르기 전망", "date": "2026-10-29", "source": "이투데이 (우리은행 연구원 전망)", "url": "https://www.etoday.co.kr/news/view/2641447", "tag": "의견",
+     "summary": "워시 의장의 금융여건 발언 등이 금리·달러 동반 하락 재료로 소화됐다는 평가입니다. 29일 환율 예상 범위로 1,331~1,344원이 제시됐고, 수입업체 결제와 해외주식 환전 수요가 하단을 받친다고 봤습니다."},
+    {"title": "후티 반군의 사우디 공격에 브렌트유 116달러대", "date": "2026-10-23", "source": "Capp Notes (장 마감 정리)", "url": "https://cappnotes.substack.com/p/closing-look-friday-october-23-2026", "tag": "사실",
+     "summary": "사우디아라비아를 겨냥한 후티 반군의 추가 공격으로 브렌트유가 116.72달러로 4월 말 이후 최고 종가를 기록했고 WTI도 103달러를 넘었습니다. 유가발 물가 우려로 미 10년물 금리가 5% 가까이 올랐습니다."}
   ],
-  "holdings": {},
+  "holdings": {
+    "(MSFT)": [
+      {"title": "마이크로소프트 FY27 1분기 매출 923억 달러, 19% 증가", "date": "2026-10-28", "source": "Microsoft 실적 발표 (SEC 8-K)", "url": "https://www.sec.gov/Archives/edgar/data/0000789019/000119312526436122/msft-ex99_1.htm", "tag": "사실",
+       "summary": "영업이익 459억 달러(+21%), 마이크로소프트 클라우드 매출 639억 달러(+30%), Azure 매출 48% 성장을 발표했습니다. 배당과 자사주 매입으로 102억 달러를 주주에게 돌려줬습니다."},
+      {"title": "실적 발표 후 시간외 주가 2.6% 상승", "date": "2026-10-28", "source": "Capp Notes (장 마감 정리)", "url": "https://cappnotes.substack.com/p/closing-look-wednesday-october-28", "tag": "사실",
+       "summary": "매출이 시장 예상치(906.9억 달러)를 웃돌면서 시간외 거래에서 올랐습니다. 같은 날 실적을 낸 알파벳은 예상치를 밑돌아 10% 넘게 떨어졌습니다."}
+    ]
+  },
   "events": [
-    {"name": "10월 FOMC 결과 발표", "date": "10월 29일 오전 3시 (한국시간)"},
+    {"name": "알트리아(MO) 3분기 실적 발표", "date": "10월 29일 오후 8시 (한국시간)"},
+    {"name": "아마존(AMZN) 3분기 실적 컨퍼런스콜", "date": "10월 30일 오전 6시 (한국시간)"},
     {"name": "미국 중간선거", "date": "11월 3일"},
+    {"name": "조비(JOBY) 3분기 실적 발표", "date": "11월 4일 장 마감 후 (한국시간 5일 오전)"},
     {"name": "미국 10월 고용지표", "date": "11월 6일 오후 10시 30분 (한국시간)"},
+    {"name": "아처(ACHR) 3분기 실적 발표", "date": "11월 9일"},
+    {"name": "미국 10월 소비자물가(CPI)", "date": "11월 10일 오후 10시 30분 (한국시간)"},
     {"name": "한국은행 금통위", "date": "11월 26일"},
-    {"name": "12월 FOMC (점도표)", "date": "12월 10일 오전 4시 (한국시간)"}
+    {"name": "12월 FOMC 결과 (점도표)", "date": "12월 10일 오전 4시 (한국시간)"}
   ]
 }
