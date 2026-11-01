@@ -1,50 +1,61 @@
 {
   "schema": 1,
-  "updated": "2026-10-29 10:10 KST",
-  "period": "2026-10-22 ~ 2026-10-29",
+  "updated": "2026-11-02 06:50 KST",
+  "period": "2026-10-26 ~ 2026-11-01",
   "indicators": [
     {"item": "기준금리", "us": "3.75~4.00%", "kr": "3.00%", "asof": "미국 10월 28일 동결(연준 성명) · 한국 10월 22일 동결(한은)"},
-    {"item": "소비자물가 (전년비)", "us": "3.7%", "kr": "2.9%", "asof": "2026년 9월 (BLS · 국가데이터처)"},
-    {"item": "근원물가", "us": "2.6%", "kr": "2.8%", "asof": "2026년 9월 (BLS · 한은 결정문 인용)"},
+    {"item": "소비자물가 (전년비)", "us": "3.7%", "kr": "2.9%", "asof": "2026년 9월 (BLS · 국가데이터처). 미국 9월 PCE 물가 3.6% (BEA, 10월 29일). 한국 10월분은 11월 3일 발표"},
+    {"item": "근원물가", "us": "2.6% (근원 PCE 3.1%)", "kr": "2.8%", "asof": "2026년 9월 (BLS · BEA · 한은 결정문 인용)"},
     {"item": "실업률", "us": "4.2%", "kr": "—", "asof": "2026년 9월 (BLS)"},
-    {"item": "원/달러", "us": "—", "kr": "1,337.7원", "asof": "10월 28일 서울 종가 (이투데이)"},
-    {"item": "미 10년물 국채금리", "us": "5.04%", "kr": "—", "asof": "10월 28일 뉴욕 종가 (Capp Notes)"},
-    {"item": "주간 등락 (코스피·S&P 500)", "us": "S&P 500 +1.6%", "kr": "코스피 +8.3%", "asof": "10월 23일 종가 대비 10월 28일 종가 (S&P 7,623.68→7,743.98, 코스피 5,550.30→6,012.44)"}
+    {"item": "원/달러", "us": "—", "kr": "1,334.3원", "asof": "10월 30일 서울 종가 (비즈니스코리아)"},
+    {"item": "미 10년물 국채금리", "us": "약 4.93%", "kr": "—", "asof": "10월 30일 뉴욕 마감 (Investrade). 10월 29일 공식 기록 4.98%"},
+    {"item": "주간 등락 (코스피·S&P 500)", "us": "S&P 500 −0.6%", "kr": "코스피 +3.3%", "asof": "10월 23일 종가 대비 10월 30일 종가 (S&P 7,623.68→7,580.07, 코스피 5,550.30→5,730.74)"}
   ],
   "macro": [
-    {"title": "FOMC, 기준금리 3.75~4.00% 동결…쿡·해맥 2명 인상 주장하며 반대", "date": "2026-10-28", "source": "연방준비제도 (FOMC 성명)", "url": "https://www.federalreserve.gov/monetarypolicy/files/monetary20261028a1.pdf", "tag": "사실",
-     "summary": "표결은 10대 2로, 리사 쿡 이사와 베스 해맥 클리블랜드 연은 총재가 0.25%p 인상을 원했습니다. 성명은 물가가 여전히 높다고 평가하고 다음 결정은 추가 자료를 보고 정하겠다며 금리 경로를 따로 제시하지 않았습니다."},
-    {"title": "워시 의장 \"정치는 결정에 영향 없어\"…긴축 효과는 아직 판단 일러", "date": "2026-10-28", "source": "Yahoo Finance (기자회견 라이브)", "url": "https://finance.yahoo.com/economy/policy/live/fed-meeting-live-updates-interest-rates-held-steady-in-split-vote-warsh-says-politics-played-no-role-ahead-of-midterm-elections-191946928.html", "tag": "사실",
-     "summary": "워시 의장은 중간선거를 앞둔 동결에 정치적 고려가 없었다고 밝히고, 그간의 인상이 효과를 내기 시작했지만 결론을 내리기는 이르다고 했습니다. 2027년부터 연 1회는 금리 표결 없이 전략만 논의하는 회의로 바꾼다는 계획도 내놨습니다."},
-    {"title": "12월 FOMC 0.25%p 인상 확률 약 85% 반영", "date": "2026-10-28", "source": "Yahoo Finance (Bloomberg·CME FedWatch 인용)", "url": "https://finance.yahoo.com/economy/policy/live/fed-meeting-live-updates-interest-rates-held-steady-in-split-vote-warsh-says-politics-played-no-role-ahead-of-midterm-elections-191946928.html", "tag": "컨센서스",
-     "summary": "동결 뒤에도 선물시장은 12월 9일 회의에서 추가 인상을 유력하게 보고 있습니다. 그 전 10월 고용(11월 6일)과 10월 CPI(11월 10일)가 변수입니다."},
-    {"title": "뉴욕증시 소폭 상승, 미 10년물 금리는 5% 위로", "date": "2026-10-28", "source": "Capp Notes (장 마감 정리)", "url": "https://cappnotes.substack.com/p/closing-look-wednesday-october-28", "tag": "사실",
-     "summary": "S&P 500은 0.28% 오른 7,743.98로 3일 연속 상승했고, 10년물 금리는 5.2bp 올라 5.04%로 마감했습니다. 같은 날 WTI는 배럴당 102.78달러로 다시 100달러를 넘었고 캐나다 중앙은행은 2023년 이후 처음으로 금리를 올렸습니다."},
-    {"title": "코스피 6.63% 급등해 6,000선 회복…SK하이닉스 사상 최대 실적", "date": "2026-10-28", "source": "블록미디어", "url": "https://www.blockmedia.co.kr/archives/1157590", "tag": "사실",
-     "summary": "SK하이닉스가 3분기 영업이익 83.3조 원의 최대 실적과 주주환원 계획을 내놓자 반도체주가 급등해 코스피가 6,012.44로 마감했습니다. 이틀 연속 매수 사이드카가 발동됐고 외국인·기관이 순매수했습니다."},
-    {"title": "원/달러 14원 오른 1,337.7원 마감, FOMC 전 달러 매수", "date": "2026-10-28", "source": "이투데이", "url": "https://www.etoday.co.kr/news/view/2641260", "tag": "사실",
-     "summary": "FOMC를 앞둔 글로벌 달러 강세와 외국인의 선물환 달러 매수로 환율이 15일 이후 최고치로 올랐습니다. 26일에는 FOMC 경계감과 외국인 순매도로 코스피가 1.46% 내린 5,469.47로 마감한 바 있습니다."},
-    {"title": "FOMC가 비둘기로 해석돼 환율 1,330원대 숨고르기 전망", "date": "2026-10-29", "source": "이투데이 (우리은행 연구원 전망)", "url": "https://www.etoday.co.kr/news/view/2641447", "tag": "의견",
-     "summary": "워시 의장의 금융여건 발언 등이 금리·달러 동반 하락 재료로 소화됐다는 평가입니다. 29일 환율 예상 범위로 1,331~1,344원이 제시됐고, 수입업체 결제와 해외주식 환전 수요가 하단을 받친다고 봤습니다."},
-    {"title": "후티 반군의 사우디 공격에 브렌트유 116달러대", "date": "2026-10-23", "source": "Capp Notes (장 마감 정리)", "url": "https://cappnotes.substack.com/p/closing-look-friday-october-23-2026", "tag": "사실",
-     "summary": "사우디아라비아를 겨냥한 후티 반군의 추가 공격으로 브렌트유가 116.72달러로 4월 말 이후 최고 종가를 기록했고 WTI도 103달러를 넘었습니다. 유가발 물가 우려로 미 10년물 금리가 5% 가까이 올랐습니다."}
+    {"title": "FOMC, 기준금리 3.75~4.00% 동결…2명은 인상 주장하며 반대", "date": "2026-10-28", "source": "연방준비제도 (FOMC 성명)", "url": "https://www.federalreserve.gov/monetarypolicy/files/monetary20261028a1.pdf", "tag": "사실",
+     "summary": "표결은 10대 2였고 쿡 이사와 해맥 클리블랜드 연은 총재가 0.25%p 인상을 원했습니다. 성명은 물가가 여전히 높다고 보면서 다음 결정은 추가 자료를 보고 정하겠다고 했습니다."},
+    {"title": "미 3분기 GDP 연율 3.4% 성장, 9월 PCE 물가 3.6%", "date": "2026-10-29", "source": "미 경제분석국(BEA)", "url": "https://www.bea.gov/news/2026/personal-income-and-outlays-september-2026", "tag": "사실",
+     "summary": "3분기 실질 GDP 성장률은 2분기 2.2%에서 3.4%로 높아졌습니다. 같은 날 나온 9월 PCE 물가는 전월비 0.5%, 전년비 3.6% 올랐고 근원 PCE는 전년비 3.1%로, 성장은 강하고 물가는 끈적한 조합이 확인됐습니다."},
+    {"title": "뉴욕증시 금요일 급락, S&P 500 주간 0.6% 하락", "date": "2026-10-30", "source": "Investomine (주간 시장 정리)", "url": "https://investomine.substack.com/p/weekly-market-report30-october-2026", "tag": "사실",
+     "summary": "30일 S&P 500은 1.8%, 나스닥은 2.9% 떨어져 7,580.07로 한 주를 마쳤습니다. 대형 기술주의 AI 설비투자 부담과 인텔의 약한 가이던스(하루 약 29% 하락)가 매도를 이끌었고, 헬스케어·소재 업종은 올랐습니다."},
+    {"title": "국제유가 강세 지속, 브렌트유 117달러대", "date": "2026-10-30", "source": "Investrade (시장 리뷰)", "url": "https://investrade.com/market-review-october-30-2026/", "tag": "사실",
+     "summary": "WTI는 배럴당 104.12달러로 9월 중순 이후, 브렌트유는 117.64달러로 4월 말 이후 가장 높은 종가를 기록했습니다. 미 10년물 금리는 이날 내려 4.9%대 초반에서 마감했습니다."},
+    {"title": "코스피 3.48% 급락해 5,730선…주간으로는 3.3% 상승", "date": "2026-10-30", "source": "비즈니스코리아", "url": "https://www.businesskorea.co.kr/news/articleView.html?idxno=280098", "tag": "사실",
+     "summary": "미국 기술주 급락이 반도체주로 번지며 코스피가 5,730.74로 마감했고 외국인은 약 1조 6천억 원을 순매도했습니다. 원/달러 환율은 월말 수출업체 매도 물량에 2.5원 내린 1,334.3원으로 마감했습니다."},
+    {"title": "삼성전자 3분기 영업이익 107.4조 원, 3분기 배당 총 30조 원", "date": "2026-10-29", "source": "삼성전자 뉴스룸 (실적 발표)", "url": "https://news.samsung.com/kr/%ec%82%bc%ec%84%b1%ec%a0%84%ec%9e%90-2026%eb%85%84-3%eb%b6%84%ea%b8%b0-%ec%8b%a4%ec%a0%81-%eb%b0%9c%ed%91%9c", "tag": "사실",
+     "summary": "매출 195.3조 원, 영업이익 107.4조 원으로 전분기보다 각각 14%, 20% 늘었습니다. 올해 총 주주환원은 90~110조 원으로 제시했고, 남은 재원의 구체적 실행 방안은 2027년 1월 말 이사회에서 확정한다고 밝혔습니다."},
+    {"title": "10월 수출 1,153억 달러, 반도체 564억 달러로 견인", "date": "2026-11-01", "source": "뉴스핌 (산업통상부 수출입동향 발표)", "url": "https://www.newspim.com/news/view/20261031000112", "tag": "사실",
+     "summary": "10월 수출은 전년 같은 달보다 93.7% 늘었고 무역수지는 425억 달러 흑자였습니다. 반도체 수출이 564.4억 달러로 259.4% 증가해 전체 증가를 주도했습니다."}
   ],
   "holdings": {
     "(MSFT)": [
       {"title": "마이크로소프트 FY27 1분기 매출 923억 달러, 19% 증가", "date": "2026-10-28", "source": "Microsoft 실적 발표 (SEC 8-K)", "url": "https://www.sec.gov/Archives/edgar/data/0000789019/000119312526436122/msft-ex99_1.htm", "tag": "사실",
-       "summary": "영업이익 459억 달러(+21%), 마이크로소프트 클라우드 매출 639억 달러(+30%), Azure 매출 48% 성장을 발표했습니다. 배당과 자사주 매입으로 102억 달러를 주주에게 돌려줬습니다."},
-      {"title": "실적 발표 후 시간외 주가 2.6% 상승", "date": "2026-10-28", "source": "Capp Notes (장 마감 정리)", "url": "https://cappnotes.substack.com/p/closing-look-wednesday-october-28", "tag": "사실",
-       "summary": "매출이 시장 예상치(906.9억 달러)를 웃돌면서 시간외 거래에서 올랐습니다. 같은 날 실적을 낸 알파벳은 예상치를 밑돌아 10% 넘게 떨어졌습니다."}
+       "summary": "영업이익 459억 달러(+21%), 마이크로소프트 클라우드 매출 639억 달러(+30%), Azure 매출 48% 성장을 발표했습니다. 배당과 자사주 매입으로 102억 달러를 주주에게 돌려줬습니다."}
+    ],
+    "(AMZN)": [
+      {"title": "아마존 3분기 매출 2,019억 달러(+12%), AWS 39% 성장", "date": "2026-10-29", "source": "StockTitan (아마존 실적 발표 정리)", "url": "https://www.stocktitan.net/articles/amazon-q3-2026-earnings-aws-cloud-growth", "tag": "사실",
+       "summary": "영업이익은 281억 달러로 회사 전망 상단을 넘었고 AWS 매출은 460억 달러였습니다. 다만 분기 설비투자가 773억 달러로 1년 전의 두 배를 넘었고, 4분기 매출 전망은 2,400억~2,470억 달러로 제시됐습니다."},
+      {"title": "실적 발표 직후 시간외 주가 약 11% 하락", "date": "2026-10-29", "source": "StockTitan", "url": "https://www.stocktitan.net/articles/amazon-q3-2026-earnings-aws-cloud-growth", "tag": "사실",
+       "summary": "주당순이익이 1.89달러로 전년(1.95달러)보다 줄었고 AI 설비투자 부담이 부각되며 시간외 거래에서 크게 내렸습니다. 전년 순이익에는 앤트로픽 투자 평가이익 95억 달러가 포함돼 있었습니다."}
+    ],
+    "(MO)": [
+      {"title": "알트리아 3분기 조정 EPS 1.52달러, 연간 가이던스 상향", "date": "2026-10-29", "source": "Altria IR (실적 발표)", "url": "https://investor.altria.com/press-releases/news-details/2026/Altria-Reports-2026-Third-Quarter-and-Nine-Months-Results-Announces-Expanded-Share-Repurchase-Program-Raises-2026-Full-Year-Earnings-Guidance/default.aspx", "tag": "사실",
+       "summary": "조정 EPS는 4.8% 늘었고 2026년 조정 EPS 전망을 5.66~5.74달러로 올렸습니다. 자사주 매입 한도를 10억 달러 늘려 2027년 말까지 연장했으며, 연 배당은 주당 4.44달러 수준입니다."}
+    ],
+    "(JOBY)": [
+      {"title": "조비, 플로리다 eVTOL 시범사업(eIPP) 비행 시작", "date": "2026-10-30", "source": "AIN Online", "url": "https://ainonline.com/aviation-news/futureflight/2026-10-30/joby-and-beta-kick-florida-eipp-flights", "tag": "사실",
+       "summary": "조비의 S4 시제기가 베타 테크놀로지스 기체와 함께 세인트피터즈버그에서 탬파 공항까지 약 20분간 비행했습니다. 11월 2일 올랜도 공항 착륙, 7~8일 케네디 우주센터 행사가 이어질 예정입니다."}
     ]
   },
   "events": [
-    {"name": "알트리아(MO) 3분기 실적 발표", "date": "10월 29일 오후 8시 (한국시간)"},
-    {"name": "아마존(AMZN) 3분기 실적 컨퍼런스콜", "date": "10월 30일 오전 6시 (한국시간)"},
+    {"name": "한국 10월 소비자물가동향", "date": "11월 3일 (국가데이터처)"},
     {"name": "미국 중간선거", "date": "11월 3일"},
     {"name": "조비(JOBY) 3분기 실적 발표", "date": "11월 4일 장 마감 후 (한국시간 5일 오전)"},
     {"name": "미국 10월 고용지표", "date": "11월 6일 오후 10시 30분 (한국시간)"},
     {"name": "아처(ACHR) 3분기 실적 발표", "date": "11월 9일"},
     {"name": "미국 10월 소비자물가(CPI)", "date": "11월 10일 오후 10시 30분 (한국시간)"},
+    {"name": "한국 10월 고용동향", "date": "11월 11일 (국가데이터처)"},
+    {"name": "미국 3분기 GDP 잠정치(2차)", "date": "11월 25일 (BEA)"},
     {"name": "한국은행 금통위", "date": "11월 26일"},
     {"name": "12월 FOMC 결과 (점도표)", "date": "12월 10일 오전 4시 (한국시간)"}
   ]
